@@ -45,6 +45,12 @@ function Navbar() {
             </Link>
           ))}
         </div>
+        <button
+          onClick={() => navigate("/Cart")}
+          className="btn btn-outline-warning ms-3"
+        >
+         <i className="bi bi-cart-fill"></i>
+        </button>
 
         {/* Auth Actions */}
         <div className="flex items-center space-x-3">

@@ -8,6 +8,9 @@ import Login from "./pages/Login";
 import Watches from "./pages/Watches";
 import Categories from "./pages/Categories";
 import Register from "./pages/Register";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+
 
 function App() {
   return (
@@ -31,6 +34,10 @@ function App() {
 
           {/* Account Registration */}
           <Route path="/Register" element={<Register />} />
+
+          <Route path="/Cart" element={<Cart />} />
+
+          <Route path="/Checkout"  element={<Checkout/>} />
         </Routes>
       </Router>
     </AuthProvider>

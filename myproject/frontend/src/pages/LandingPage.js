@@ -192,10 +192,10 @@ function LandingPage() {
                     Bold sterling silver, iced necklaces, and premium curb/cuban link statement chains.
                   </p>
                   <button
-                    onClick={() => navigate("/BuyPage")}
+                    onClick={() => navigate("/Logosec?category=Chains")}
                     className="mt-5 w-full py-3 bg-slate-800 group-hover:bg-amber-500 text-slate-300 group-hover:text-slate-950 font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
                   >
-                    View Chains <i className="bi bi-arrow-right"></i>
+                     View Chains <i className="bi bi-arrow-right"></i>
                   </button>
                 </div>
               </div>
@@ -219,7 +219,7 @@ function LandingPage() {
                     Polarized lenses, UV400 square frames, and custom sunglasses designed to fit any face.
                   </p>
                   <button
-                    onClick={() => navigate("/Logosec")}
+                    onClick={() => navigate("/Logosec?category=Glasses")}
                     className="mt-5 w-full py-3 bg-slate-800 group-hover:bg-amber-500 text-slate-300 group-hover:text-slate-950 font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     View Glasses <i className="bi bi-arrow-right"></i>

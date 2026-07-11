@@ -5,14 +5,14 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import InputField from '../components/InputField';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000/api/users';
 
 function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const [formData, setFormData] = useState({
-    identifier: '',
+    username: '',
     password: '',
   });
   const [errors, setErrors] = useState({});
@@ -29,8 +29,8 @@ function Login() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.identifier.trim()) {
-      newErrors.identifier = 'Username or Email is required.';
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username or Email is required.';
     }
     if (!formData.password) {
       newErrors.password = 'Password is required.';
@@ -51,7 +51,7 @@ function Login() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          identifier: formData.identifier,
+          username: formData.username,
           password: formData.password,
         }),
       });
@@ -61,22 +61,13 @@ function Login() {
       if (!res.ok) {
         setApiError(data.error || 'Login failed. Please verify credentials.');
       } else {
-        login(data.user, data.token);
-        navigate('/BuyPage');
+        login(data.user,"");
+        navigate('/');
       }
     } catch (err) {
       // Mock Login Fallback (so client still functions if API is offline during testing/review)
-      console.warn('Backend API not responding, running mockup authentication...');
-      const mockUser = {
-        id: 999,
-        username: formData.identifier.split('@')[0],
-        email: formData.identifier.includes('@') ? formData.identifier : `${formData.identifier}@example.com`,
-        full_name: formData.identifier.split('@')[0].toUpperCase(),
-        created_at: new Date().toISOString(),
-      };
-      const mockToken = 'mock_jwt_token_for_rmvc_session';
-      login(mockUser, mockToken);
-      navigate('/BuyPage');
+      console.error(err);
+      setApiError("Unable to connect to server.");
     } finally {
       setLoading(false);
     }
@@ -120,14 +111,14 @@ function Login() {
             <form onSubmit={handleSubmit} noValidate>
               <InputField
                 label="Username or Email"
-                name="identifier"
+                name="username"
                 type="text"
                 placeholder="e.g. ahmed_rmvc"
                 icon="bi-person"
                 required
-                value={formData.identifier}
+                value={formData.username}
                 onChange={handleChange}
-                error={errors.identifier}
+                error={errors.username}
               />
 
               <InputField

@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Notification from "../components/Notifications";
+
 
 const watchBrands = [
   {
@@ -83,25 +85,48 @@ function Watches() {
   
   // State for watch details modal
   const [selectedWatch, setSelectedWatch] = useState(null);
+  const [notification, setNotification] = useState({ show: false, type: "",  message: "" });
 
   const HandleEnquire = (item) => {
+
     if (isLoggedIn) {
-      if (item.models) {
-        // Enquiring about a whole brand
-        alert(`Your inquiry regarding ${item.name} has been submitted! Our concierge service will get in touch shortly.`);
-      } else {
-        // Clicking specific model
-        setSelectedWatch(item);
-      }
-    } else {
-      alert("Please log in your account.");
-      navigate("/Home");
+        if (item.models) {
+            setNotification({
+                show: true,
+                type: "info",
+                message: `Your inquiry regarding ${item.name} has been submitted! Our concierge service will get in touch shortly.`
+            });
+        }
+        else {
+            setSelectedWatch(item);
+        }
+
     }
+    else {
+        setNotification({
+            show: true,
+            type: "warning",
+            message: "Please log in to your account first."
+        });
+        setTimeout(() => {
+            navigate("/Home");
+        }, 1500);
+
+    }
+
   };
 
   const HandleBooking = (watchName) => {
-    alert(`Inquiry for "${watchName}" submitted! Our private concierge will contact you on your registered details within 12 hours.`);
-    setSelectedWatch(null);
+
+    setNotification({
+        show: true,
+        type: "success",
+        message: `Inquiry for "${watchName}" submitted! Our private concierge will contact you on your registered details within 12 hours.`
+    });
+    setTimeout(() => {
+        setSelectedWatch(null);
+    }, 1000);
+
   };
 
   return (
@@ -245,6 +270,21 @@ function Watches() {
 
       {/* Footer */}
       <Footer />
+      
+      <Notification
+
+        show={notification.show}
+        type={notification.type}
+        message={notification.message}
+
+        onClose={() =>
+          setNotification({
+          ...notification,
+          show: false
+          })
+        }
+       />
+
     </div>
   );
 }
